@@ -2,6 +2,6 @@
   "scripts": {
     "start": "cd backend && npm run start",
     "deployFrontend": "cd frontend && npm run deploy",
-    "firstTimeStart": "cd backend && npm install && npm start"
+    "firstTimeStart": "cd backend && npm install && mv .env.example .env && npm start"
   }
 }

@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react'
-import { getTodos, updateTodo, createTodo, removeTodo } from '../utils/api'
-import { NavLink } from 'react-router-dom'
+import { getFolder, getTodos, updateTodo, createTodo, removeTodo } from '../utils/api'
+import { NavLink, useParams } from 'react-router-dom'
 
 const Todos = () => {
+  const { id } = useParams()
   const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState("")
+  const [folderName, setFolderName] = useState("")
   useEffect(() => {
-    getTodos().then(res => setTodos(res))
-  }, [])
+    if(id)
+      getFolder(id).then(res => {
+        setTodos(res.todos)
+        setFolderName(res.name)
+      })
+    else
+      getTodos().then(res => setTodos(res))
+  }, [id])
 
   const handleCheckTodo = (event, id) => {
     console.log(event)
@@ -23,7 +31,7 @@ const Todos = () => {
   const handleAddTodo = () => {
     if(newTodo){
       setNewTodo("")
-      createTodo({name: newTodo})
+      createTodo({name: newTodo, folderId: id || null})
         .then(res => setTodos([...todos, res]))
     }
   }
@@ -46,7 +54,7 @@ const Todos = () => {
   return (
     <div className="w-full md:w-[768px] mx-auto">
       <h1 className="bg-amber-300 text-black text-center font-bold text-xl py-10">
-        To-Do List
+        <NavLink to="/">Folders</NavLink> {`> ${folderName || 'All Items'}`}
       </h1>
       <div>
         <ul className="w-full px-10 bg-amber-100 py-4 pb-5">

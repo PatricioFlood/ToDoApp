@@ -1,4 +1,4 @@
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { getTodo, updateTodo } from '../utils/api'
 
@@ -31,7 +31,7 @@ const EditTodo = () => {
         <input className="flex-grow w-full p-2 rounded-lg text-center" value={name} onChange={handleChangeInput}></input> 
         <div className="flex justify-center mt-2">
           <button className="bg-amber-200 p-2 rounded-lg hover:bg-amber-300" onClick={handleUpdate}>Save</button>
-          <NavLink to="/" className="bg-amber-200 p-2 ml-2 rounded-lg hover:bg-amber-300">Cancel</NavLink>
+          <button className="bg-amber-200 p-2 ml-2 rounded-lg hover:bg-amber-300" onClick={() => navigate(-1)}>Cancel</button>
         </div>
       </div>
     </div>
